@@ -1,7 +1,5 @@
 %YAML 1.2
 ---
-file_extensions:
-  - lua
 first_line_match: ^-- CrayonScript
 scope: source.lua
 variables:
@@ -13,7 +11,7 @@ variables:
   reserved_word_statement: |- # excludes 'not', 'true', 'nil', 'false', 'function'
     (?x:(?:
       and|break|do|elseif|else|end|for|goto|if|in|
-      local|or|repeat|return|then|until|while
+      local|or|parallel|repeat|return|series|then|until|while
     ){{identifier_break}})
   metamethod: |- # http://lua-users.org/wiki/MetatableEvents
     (?x:__(?:
@@ -95,8 +93,6 @@ contexts:
 
     - include: control-statements
 
-    - include: do-block
-
     - match: break{{identifier_break}}
       scope: keyword.control.break.lua
 
@@ -163,21 +159,19 @@ contexts:
       pop: true
     - include: else-pop
 
-
-  do-block:
+  control-statements:
     - match: do{{identifier_break}}
       scope: keyword.control.lua
       push: block-contents
 
-  parallel-block:
     - match: parallel{{identifier_break}}
-      scope: keyword.parallel.lua
+      scope: keyword.control.lua
+      push: block-contents
 
-  series-block:
     - match: series{{identifier_break}}
-      scope: keyword.series.lua
+      scope: keyword.control.lua
+      push: block-contents
 
-  control-statements:
     - match: if{{identifier_break}}
       scope: keyword.control.conditional.lua
       push:
@@ -429,6 +423,7 @@ contexts:
         (?x:_G|_VERSION){{identifier_break}}
       scope: support.constant.builtin.lua
       pop: true
+
     - match: |-
         (?x:
           assert|collectgarbage|dofile|error|getmetatable|ipairs|load|loadfile
@@ -438,6 +433,7 @@ contexts:
         ){{identifier_break}}
       scope: support.function.builtin.lua
       pop: true
+
     - include: builtin-modules
 
   variable:
