@@ -94,6 +94,8 @@ contexts:
 
     - include: control-statements
 
+    - include: do-block
+
     - match: break{{identifier_break}}
       scope: keyword.control.break.lua
 
@@ -160,19 +162,14 @@ contexts:
       pop: true
     - include: else-pop
 
-  control-statements:
-    - match: series{{identifier_break}}
-      scope: keyword.control.lua
-      push: block-contents
 
-    - match: parallel{{identifier_break}}
-      scope: keyword.control.lua
-      push: block-contents
-
+  do-block:
     - match: do{{identifier_break}}
       scope: keyword.control.lua
       push: block-contents
 
+
+  control-statements:
     - match: if{{identifier_break}}
       scope: keyword.control.conditional.lua
       push:
