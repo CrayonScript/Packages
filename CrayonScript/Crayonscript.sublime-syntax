@@ -2,6 +2,7 @@
 ---
 file_extensions:
   - lua
+first_line_match: ^-- CrayonScript
 scope: source.lua
 variables:
   reserved_word: |-
@@ -168,6 +169,13 @@ contexts:
       scope: keyword.control.lua
       push: block-contents
 
+  parallel-block:
+    - match: parallel{{identifier_break}}
+      scope: keyword.parallel.lua
+
+  series-block:
+    - match: series{{identifier_break}}
+      scope: keyword.series.lua
 
   control-statements:
     - match: if{{identifier_break}}
