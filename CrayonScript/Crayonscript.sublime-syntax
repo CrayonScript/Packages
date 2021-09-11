@@ -7,7 +7,7 @@ variables:
   reserved_word: |-
     (?x:(?:
       and|break|do|elseif|else|end|false|for|function|goto|if|in|
-      local|nil|not|or|repeat|return|then|true|until|while
+      local|nil|not|or|parallel|repeat|return|series|then|true|until|while
     ){{identifier_break}})
   reserved_word_statement: |- # excludes 'not', 'true', 'nil', 'false', 'function'
     (?x:(?:
@@ -161,6 +161,14 @@ contexts:
     - include: else-pop
 
   control-statements:
+    - match: series{{identifier_break}}
+      scope: keyword.control.lua
+      push: block-contents
+
+    - match: parallel{{identifier_break}}
+      scope: keyword.control.lua
+      push: block-contents
+
     - match: do{{identifier_break}}
       scope: keyword.control.lua
       push: block-contents
